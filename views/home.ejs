@@ -1,15 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <%- include("partials/head") %>
 
-  <body>
-    <%- include("partials/nav") %>
+<body>
+  <%- include("partials/nav") %>
 
-    <h1>Blogging Application</h1>
+  <h1>Blogging Application</h1>
+<div class="container mt-4">
+  <div class="row">
+
+  <% blogs.forEach(blog => { %>
+    <div class="col-md-4">
+
+  <div class="card mb-4 mx-auto" style="max-width: 400px;">
+    <img src="<%= blog.coverImageURL %>" class="card-img-top img-fluid" alt="Blog cover">
+    <div class="card-body">
+
+      <h5 class="card-title"><%= blog.title %></h5>
+      <p class="card-text"><%= blog.body %></p>
+      <p class="text-muted">
+        By <%= blog.createdBy.fullName %>
+      </p>
+      <a href="/blog/<%= blog._id %>" class="btn btn-primary">
+        View Blog
+      </a>
+    </div>
+
+  </div>
+  </div>
 
 
-    
+  <% }) %>
+
+</div>
+  </div>
+
+
+
   <%- include("partials/script") %>
-  </body>
+</body>
+
 </html>

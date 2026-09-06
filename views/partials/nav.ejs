@@ -1,10 +1,22 @@
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Blogging App</a>
+    <a class="navbar-brand" href="/">Blogify</a>
 
     <div>
-      <a href="/signin" class="btn btn-outline-light me-2">Sign In</a>
+    <% if (!user) { %>
+     <a href="/signin" class="btn btn-outline-light me-2">Sign In</a>
       <a href="/signup" class="btn btn-light">Sign Up</a>
+
+   <% } else { %>
+<span class="text-light me-3"><%= user.fullName %></span>
+<a href="/add-blog" class="btn btn-light me-2">Add Blog</a>
+<a href="/logout" class="btn btn-outline-light">Logout</a>
+
+
+<% } %>
+    
     </div>
+ 
+
   </div>
 </nav>

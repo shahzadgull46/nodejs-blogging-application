@@ -1,22 +1,38 @@
 const User = require("../models/user");
-const {matchPassword} = require("../models/user")
+const { matchPassword } = require("../models/user");
 async function handleSignUp(req, res) {
-  console.log(req.body);
-  const { fullName, email, password } = req.body;
-  const user = await User.create({
-    fullName,
-    email,
-    password,
-  });
+  try {
+    const { fullName, email, password } = req.body;
 
-  res.send("request received");
+    await User.create({
+      fullName,
+      email,
+      password,
+    });
+
+    res.send("request received");
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.send("Email already exists");
+    }
+
+    return res.status(500).send("Something went wrong");
+  }
 }
 async function handleSingIn(req, res) {
-  const { email, password } = req.body;
-  const user = await User.matchPassword(email, password);
-  console.log(user);
-
-  res.send("Sign in successful");
+  try {
+    const { email, password } = req.body;
+    const token = await User.matchPasswordAndGenerateToken(email, password);
+    console.log(token);
+    res.cookie("token", token, {
+      httpOnly: true,
+    });
+    res.redirect("/");
+  } catch (error) {
+    return res.render("signin", {
+      error: "Incorrect email or password",
+    });
+  }
 }
 module.exports = {
   handleSignUp,

@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const crypto = require("crypto");
 
+const {createTokenForUser} = require("../services/authentication")
+
 const userSchema = new mongoose.Schema(
   {
     fullName: {
@@ -50,7 +52,7 @@ this.password = crypto
   // next();
 });
 
-userSchema.statics.matchPassword = async function(email,password){
+userSchema.statics.matchPasswordAndGenerateToken = async function(email,password){
 const user = await User.findOne({email})
 if(!user) throw new Error("User not found")
     const hasedPassword = crypto
@@ -60,9 +62,10 @@ if(!user) throw new Error("User not found")
     if (hasedPassword!==user.password) {
         throw new Error ("Incorrect Password")
     }
+    const token = createTokenForUser(user)
     user.password = undefined
     user.salt = undefined
-    return user;
+    return token;
 }
 const User = mongoose.model("user", userSchema);
 
