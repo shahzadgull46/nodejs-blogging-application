@@ -5,6 +5,14 @@ A full-stack blogging application built with **Node.js, Express.js, MongoDB, Mon
 I built this project to practice building a complete server-side web application with user authentication, blog creation, image uploads, comments, MongoDB relationships, and an MVC-style project structure.
 
 ---
+## 🌐 Live Demo
+
+The application is deployed and available online:
+
+**Live Application:** https://nodejs-blogging-application.bonto.run/
+
+> The live deployment demonstrates the application's authentication, blog creation, image uploads, comments, and other implemented functionality.
+
 
 ## 📸 Screenshots
 
